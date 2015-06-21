@@ -32,8 +32,8 @@ RUN \
 #Adjust User-ID and Group-ID
 #Change it according to your Host-System
 RUN \
-    usermod -u 1099 hts && \
-    groupmod -g 1099 hts
+    usermod -u 99 hts && \
+    groupmod -g 99 hts
     
 #Setup locale
 #Change to your location
