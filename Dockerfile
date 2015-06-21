@@ -4,6 +4,7 @@
 # docker build -f Dockerfile -t blockmove/tvheadend .
 #
 #
+# 2015-06-21 :Changed User--ID and Group-ID to nobody (99) 
 # 2015-06-09 : User-ID and Group-ID according to Host-System
 # 2015-06-08 : Added timezone, locale
 # 2015-06-07 : Init Project
@@ -29,8 +30,7 @@ RUN \
     apt-get update &&\
     apt-get install -y --force-yes tvheadend
 
-#Adjust User-ID and Group-ID
-#Change it according to your Host-System
+#Set User-ID and Group-ID to nobody (99)
 RUN \
     usermod -u 99 hts && \
     groupmod -g 99 hts
