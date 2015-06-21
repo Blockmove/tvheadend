@@ -1,1 +1,1 @@
-# tvheadend Docker-Image based on Ubuntu 14.04
+# Docker-Image tvheadend

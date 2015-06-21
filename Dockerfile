@@ -4,7 +4,8 @@
 # docker build -f Dockerfile -t blockmove/tvheadend .
 #
 #
-# 2015-06-21 :Changed User--ID and Group-ID to nobody (99) 
+# 2015-06-21 : Changed User--ID and Group-ID to nobody (99)
+#                      Cleanup
 # 2015-06-09 : User-ID and Group-ID according to Host-System
 # 2015-06-08 : Added timezone, locale
 # 2015-06-07 : Init Project
@@ -29,6 +30,11 @@ RUN \
 RUN \
     apt-get update &&\
     apt-get install -y --force-yes tvheadend
+    
+#Clean-Up    
+RUN \    
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #Set User-ID and Group-ID to nobody (99)
 RUN \
@@ -48,10 +54,11 @@ RUN echo "Europe/Berlin" > /etc/timezone; dpkg-reconfigure -f noninteractive tzd
 #Ports for tvheadend
 EXPOSE 9981 9982
 
-VOLUME /config 
-VOLUME /recordings 
-VOLUME /data 
-VOLUME /logos 
-VOLUME /timeshift
+VOLUME \
+    /config \ 
+    /recordings \ 
+    /data \ 
+    /logos \
+    /timeshift
 
 CMD ["/usr/bin/tvheadend","-C","-u","hts","-g","hts","-c","/config"]
