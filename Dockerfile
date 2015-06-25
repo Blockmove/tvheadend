@@ -4,7 +4,8 @@
 # docker build -f Dockerfile -t blockmove/tvheadend .
 #
 #
-# 2015-06-25 : Set video Group-ID to 39 (Same as on Host)
+# 2015-06-25 : Set video Group-ID to 39 (According to Host-System)
+#              Add User hts to Group video to get access an DVB_Devices
 # 2015-06-21 : Changed hts User-ID and hts Group-ID to nobody (99)
 #              Cleanup
 # 2015-06-09 : User-ID and Group-ID according to Host-System
@@ -37,12 +38,16 @@ RUN \
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Delete unused User and group irc (free the User-ID and Group-ID 39)
+# Set Group video to Group-ID 39 (according Host-System)  
 # Set hts User-ID and hts Group-ID to nobody (99)
-# Set video Group-ID to 39
+# Add User hts to Group video
 RUN \
+    userdel irc && \
+    groupmod -g 39 video &&\  
     usermod -u 99 hts && \
     groupmod -g 99 hts && \
-    groupmod -g 39 video    
+    usermod -a -G video hts 
     
 #Setup locale
 #Change to your location
