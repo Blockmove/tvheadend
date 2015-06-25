@@ -4,8 +4,9 @@
 # docker build -f Dockerfile -t blockmove/tvheadend .
 #
 #
-# 2015-06-21 : Changed User--ID and Group-ID to nobody (99)
-#                      Cleanup
+# 2015-06-25 : Set video Group-ID to 39 (Same as on Host)
+# 2015-06-21 : Changed hts User-ID and hts Group-ID to nobody (99)
+#              Cleanup
 # 2015-06-09 : User-ID and Group-ID according to Host-System
 # 2015-06-08 : Added timezone, locale
 # 2015-06-07 : Init Project
@@ -36,10 +37,12 @@ RUN \
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-#Set User-ID and Group-ID to nobody (99)
+# Set hts User-ID and hts Group-ID to nobody (99)
+# Set video Group-ID to 39
 RUN \
     usermod -u 99 hts && \
-    groupmod -g 99 hts
+    groupmod -g 99 hts && \
+    groupmod -g 39 video    
     
 #Setup locale
 #Change to your location
