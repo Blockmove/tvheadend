@@ -4,6 +4,7 @@
 # docker build -f Dockerfile -t blockmove/tvheadend .
 #
 #
+# 2015-07-05 : changed Setting Up locales for faster build-process
 # 2015-06-25 : Set video Group-ID to 39 (According to Host-System)
 #              Add User hts to Group video to get access an DVB_Devices
 # 2015-06-21 : Changed hts User-ID and hts Group-ID to nobody (99)
@@ -51,9 +52,10 @@ RUN \
     
 #Setup locale
 #Change to your location
-RUN locale-gen de_DE.UTF-8
-RUN locale-gen en_US.UTF-8
-RUN dpkg-reconfigure locales
+RUN \
+    locale-gen de_DE.UTF-8 &&\
+    locale-gen en_US.UTF-8 &&\
+    dpkg-reconfigure locales
 
 #Setup timezone
 #Change for your timezone
